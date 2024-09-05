@@ -1,13 +1,13 @@
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
 vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<string>> photo)
 {
 	std::vector<int> answer;
 
-	std::map<std::string, int> Pair;
+	std::unordered_map<std::string, int> Pair;
 	for (int i = 0; i < name.size(); ++i)
 	{
 		Pair.insert(std::pair<std::string, int>(name[i], yearning[i]));
