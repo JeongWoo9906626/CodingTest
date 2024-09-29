@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <stack>
 
 using namespace std;
 
@@ -9,29 +10,26 @@ int solution(string s)
 	int answer = 0;
 
 	std::stringstream StringStream = std::stringstream(s);
-	StringStream >> answer;
-	int Temp = answer;
-	bool Check = false;
-	while (true != StringStream.eof())
+	std::stack<int> AddNumber;
+	std::string Temp;
+	while (StringStream >> Temp)
 	{
 		int Number = 0;
-		if (StringStream >> Number)
+		if (Temp == "Z")
 		{
-			Temp = Number;
-			answer += Number;
-			Check = false;
+			AddNumber.pop();
 		}
 		else 
 		{
-			StringStream.clear();
-			char ZOperator;
-			StringStream >> ZOperator;
-			if ('Z' == ZOperator && false == Check)
-			{
-				answer -= Temp;
-				Check = true;
-			}
+			int Number = std::stoi(Temp);
+			AddNumber.push(Number);
 		}
+	}
+
+	while (false == AddNumber.empty())
+	{
+		answer += AddNumber.top();
+		AddNumber.pop();
 	}
 
 	return answer;
