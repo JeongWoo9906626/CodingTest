@@ -12,17 +12,9 @@ std::vector<std::vector<int>> solution(int n)
         answer[i].resize(n);
     }
     
-    int Check = 0;
-    for (int i = 0; i < answer.size(); ++i)
+    for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < answer[i].size(); ++j)
-        {
-            if (Check == i && Check == j)
-            {
-                answer[i][j] = 1;
-                ++Check;
-            }
-        }
+        answer[i][i] = 1;
     }
 
 	return answer;
