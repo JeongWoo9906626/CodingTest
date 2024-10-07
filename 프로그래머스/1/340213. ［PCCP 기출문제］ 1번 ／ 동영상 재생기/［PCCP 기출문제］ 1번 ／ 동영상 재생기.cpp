@@ -28,9 +28,13 @@ void OpeningCheck()
 
 void NextMove()
 {
+    if (CurTime.second >= 50)
+    {
+        ++CurTime.first;
+        CurTime.second -= 60;
+    }
     CurTime.second += 10;
-    CurTime.first += CurTime.second / 60;
-    CurTime.second = CurTime.second % 60;
+
     if (EndTime.first < CurTime.first)
     {
         CurTime.first = EndTime.first;
@@ -62,6 +66,35 @@ void PrevMove()
     OpeningCheck();
 }
 
+std::string NumberToDigital(int Number)
+{
+    std::string Result;
+    
+    if (Number == 0)
+    {
+        Result = "00";
+    }
+    else if (Number < 10)
+    {
+        Result += "0";
+        Result += std::to_string(Number);
+    }
+    else
+    {
+        Result = std::to_string(Number);
+    }
+    return Result;
+}
+
+std::string TimeToString(std::pair<int, int> Time)
+{
+    std::string Result;
+    std::string Minute = NumberToDigital(Time.first);
+    std::string Seconds = NumberToDigital(Time.second);
+    Result = Minute + ":" + Seconds;
+    return Result;
+}
+
 string solution(string video_len, string pos, string op_start, string op_end, vector<string> commands)
 {
     string answer = "";
@@ -70,7 +103,9 @@ string solution(string video_len, string pos, string op_start, string op_end, ve
     OpeningStart = TimeSplit(op_start);
     OpeningEnd = TimeSplit(op_end);
     CurTime = TimeSplit(pos);
+    
     OpeningCheck();
+    
     for (std::string CurCommand : commands)
     {
         if ("next" == CurCommand)
@@ -82,37 +117,8 @@ string solution(string video_len, string pos, string op_start, string op_end, ve
             PrevMove();
         }
     }
-    std::string Minute;
-    std::string Seconds;
-    if (CurTime.first == 0)
-    {
-        Minute = "00";
-    }
-    else if (CurTime.first < 10)
-    {
-        Minute += "0";
-        Minute += std::to_string(CurTime.first);
-    }
-    else
-    {
-        Minute = std::to_string(CurTime.first);
-    }
-    
-    if (CurTime.second == 0)
-    {
-        Seconds = "00";
-    }
-    else if (CurTime.second < 10)
-    {
-        Seconds += "0";
-        Seconds += std::to_string(CurTime.second);
-    }
-    else
-    {
-        Seconds += std::to_string(CurTime.second);
-    }
  
-    answer = Minute + ":" + Seconds;
+    answer = TimeToString(CurTime);
     
     return answer;
 }
