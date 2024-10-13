@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <bitset>
 
 using namespace std;
 
@@ -20,13 +21,11 @@ int OneCount(int n)
 int solution(int n) 
 {
     int answer = 0;
-    int FirstOneCount = OneCount(n);
-    int Next = n + 1;
+    int FirstOneCount = std::bitset<32>(n).count();
     
-    while (OneCount(Next) != FirstOneCount)
+    while (std::bitset<32>(++n).count() != FirstOneCount)
     {
-        ++Next;
     }
-    answer = Next;
+    answer = n;
     return answer;
 }
