@@ -15,13 +15,11 @@ std::vector<int> solution(int brown, int yellow)
     {
         if (Sum % X == 0)
         {
-            if (Sum / X <= X)
+            Y = Sum / X;
+            
+            if (Sum / X <= X && yellow == (X - 2) * (Y - 2))
             {
-                Y = Sum / X;
-                if (yellow == (X - 2) * (Y - 2))
-                {
-                    break;
-                }
+                break;
             }
         }
         ++X;
