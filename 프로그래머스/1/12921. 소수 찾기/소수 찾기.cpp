@@ -4,38 +4,27 @@
 
 using namespace std;
 
-bool PrimeCheck(int n)
-{
-    if (n <= 1) 
-    {
-        return false;
-    }
-    if (n == 2)
-    {
-        return true; 
-    }
-    if (n % 2 == 0)
-    {
-        return false;
-    }
-    
-    for (int i = 3; i <= std::sqrt(n); i += 2) 
-    {
-        if (n % i == 0) 
-        {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 int solution(int n) {
     int answer = 0;
     
-    for (int i = 2; i <= n; ++i)
+    std::vector<bool> IsPrime;
+    IsPrime.resize(n + 1, true);
+    IsPrime[0] = false;
+    IsPrime[1] = false;
+
+    for (int i = 2; i * i <= n; ++i) 
     {
-        bool Check = PrimeCheck(i);
+        if (true == IsPrime[i]) 
+        {
+            for (int j = i * i; j <= n; j += i) 
+            {
+                IsPrime[j] = false;
+            }
+        }
+    }
+    
+    for (bool Check : IsPrime)
+    {
         if (true == Check)
         {
             ++answer;
