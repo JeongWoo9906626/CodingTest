@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <queue>
 using namespace std;
 
 int solution(int k, vector<int> tangerine) 
@@ -13,22 +14,19 @@ int solution(int k, vector<int> tangerine)
     {
         ++Count[Number];
     }
-    std::vector<int> CountVec;
+    std::priority_queue<int> MaxFirst;
     for (std::pair<int, int> Temp : Count)
     {
-        CountVec.emplace_back(Temp.second);
+        MaxFirst.push(Temp.second);
     }
-    std::sort(CountVec.begin(), CountVec.end(), std::greater<int>());
     
     int Sum = 0;
-    for (int Number : CountVec)
+   
+    while (Sum < k)
     {
-        Sum += Number;
+        Sum += MaxFirst.top();
+        MaxFirst.pop();
         ++answer;
-        if (Sum >= k)
-        {
-            break;
-        }
     }
     
     
